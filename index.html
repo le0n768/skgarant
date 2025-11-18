@@ -22,16 +22,24 @@
     <p>Это твой первый Telegram Web App.</p>
     <p id="user-info">...</p>
 
+// ... новый код
     <script>
         const tg = window.Telegram.WebApp;
-
-        // Показываем, что приложение открылось
+        
+        // Показываем, что приложение готово к работе
         tg.ready();
 
-        // Показываем, кто зашел (позже мы заменим это на реальный функционал)
-        document.getElementById('user-info').innerText = 'Открыто пользователем: ' + tg.initDataUnsafe.user.first_name;
+        // Проверяем, есть ли данные о пользователе, прежде чем их выводить
+        const userInfoElement = document.getElementById('user-info');
+        
+        if (tg.initDataUnsafe.user) {
+            userInfoElement.innerText = 'Открыто пользователем: ' + tg.initDataUnsafe.user.first_name;
+        } else {
+            // Если данных нет, оставляем простую заглушку
+            userInfoElement.innerText = 'Пользователь не определен. Убедитесь, что вы открыли ссылку из чата Telegram.';
+        }
 
-        // Делаем большую синюю кнопку внизу экрана (native Telegram button)
+        // Делаем большую синюю кнопку внизу экрана
         tg.MainButton.text = "КНОПКА РАБОТАЕТ";
         tg.MainButton.show();
         
